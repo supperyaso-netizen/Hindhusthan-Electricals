@@ -1,0 +1,23 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Loader from "./components/Loader";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
+import Offline from "./pages/Offline";
+import "./styles/styles.css";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Loader />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/offline" element={<Offline />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  );
+}
