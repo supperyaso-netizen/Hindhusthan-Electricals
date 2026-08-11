@@ -9,17 +9,17 @@ export default function FinalCTA() {
     <section className="final-cta">
       <div className="container">
         <p
-          className="eyebrow reveal"
+          className="eyebrow reveal-section"
           style={{ justifyContent: "center", marginBottom: "20px" }}
         >
           Visit us today
         </p>
-        <h2 className="reveal reveal-delay-1">
+        <h2 className="reveal-section reveal-delay-1">
           Come see us at
           <br />
           Tottanuthu.
         </h2>
-        <div className="btn-row reveal reveal-delay-2">
+        <div className="btn-row reveal-section reveal-delay-2">
           <a
             className="btn btn-primary"
             href={mapsUrl}

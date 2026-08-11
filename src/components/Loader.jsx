@@ -4,7 +4,7 @@ export default function Loader() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setHidden(true), 550);
+    const timer = setTimeout(() => setHidden(true), 600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -13,6 +13,7 @@ export default function Loader() {
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
+      document.body.classList.add("page-loaded");
     }
   }, [hidden]);
 

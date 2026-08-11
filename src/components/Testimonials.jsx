@@ -27,9 +27,9 @@ export default function Testimonials() {
     <section className="section testimonials-section" id="reviews">
       <div className="container">
         <div className="section-head">
-          <span className="eyebrow">What People Say</span>
-          <h2>Customer reviews</h2>
-          <p>Hear from the people who shop with us regularly.</p>
+          <span className="eyebrow reveal">What People Say</span>
+          <h2 className="reveal reveal-delay-1">Customer reviews</h2>
+          <p className="reveal reveal-delay-2">Hear from the people who shop with us regularly.</p>
         </div>
 
         <div className="testimonials-grid">

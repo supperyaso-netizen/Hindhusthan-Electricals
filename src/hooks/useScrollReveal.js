@@ -6,24 +6,29 @@ export default function useScrollReveal() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const els = document.querySelectorAll(".reveal");
+    const selectors = ".reveal, .reveal-section, .reveal-image";
 
-    if ("IntersectionObserver" in window && !reduceMotion) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              io.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-      );
-      els.forEach((el) => io.observe(el));
-      return () => io.disconnect();
-    } else {
-      els.forEach((el) => el.classList.add("is-visible"));
+    if (reduceMotion) {
+      document.querySelectorAll(selectors).forEach((el) => {
+        el.classList.add("is-visible");
+      });
+      return;
     }
-  });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+    );
+
+    document.querySelectorAll(selectors).forEach((el) => io.observe(el));
+
+    return () => io.disconnect();
+  }, []);
 }

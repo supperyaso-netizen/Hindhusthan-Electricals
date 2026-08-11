@@ -374,17 +374,86 @@ a:focus-visible, button:focus-visible, input:focus-visible{
    ========================================================================== */
 .reveal{
   opacity:0;
-  transform:translateY(24px);
-  transition:opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+  transform:translateY(28px) scale(0.98);
+  transition:opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  will-change:opacity, transform;
 }
-.reveal.is-visible{ opacity:1; transform:translateY(0); }
-.reveal-delay-1{ transition-delay:80ms; }
-.reveal-delay-2{ transition-delay:160ms; }
-.reveal-delay-3{ transition-delay:240ms; }
-.reveal-delay-4{ transition-delay:320ms; }
+.reveal.is-visible{ opacity:1; transform:translateY(0) scale(1); }
+.reveal-delay-1{ transition-delay:100ms; }
+.reveal-delay-2{ transition-delay:200ms; }
+.reveal-delay-3{ transition-delay:300ms; }
+.reveal-delay-4{ transition-delay:400ms; }
+.reveal-delay-5{ transition-delay:500ms; }
+.reveal-delay-6{ transition-delay:600ms; }
+
+/* Section-level reveal — slightly larger motion */
+.reveal-section{
+  opacity:0;
+  transform:translateY(40px) scale(0.97);
+  transition:opacity 1s var(--ease), transform 1s var(--ease);
+  will-change:opacity, transform;
+}
+.reveal-section.is-visible{ opacity:1; transform:translateY(0) scale(1); }
+
+/* Image reveal — scale-focused */
+.reveal-image{
+  opacity:0;
+  transform:scale(0.96);
+  transition:opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change:opacity, transform;
+}
+.reveal-image.is-visible{ opacity:1; transform:scale(1); }
 
 @media (prefers-reduced-motion: reduce){
-  .reveal{ opacity:1; transform:none; transition:none; }
+  .reveal, .reveal-section, .reveal-image{
+    opacity:1; transform:none; transition:none;
+  }
+}
+
+/* ==========================================================================
+   PAGE LOAD ENTRANCE
+   ========================================================================== */
+.nav-enter{
+  opacity:0;
+  transform:translateY(-8px);
+  transition:opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.page-loaded .nav-enter{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.hero-enter-up{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.page-loaded .hero-enter-up{
+  opacity:1;
+  transform:translateY(0);
+}
+.page-loaded .hero-enter-up.d1{ transition-delay:0.15s; }
+.page-loaded .hero-enter-up.d2{ transition-delay:0.3s; }
+.page-loaded .hero-enter-up.d3{ transition-delay:0.45s; }
+.page-loaded .hero-enter-up.d4{ transition-delay:0.6s; }
+
+.hero-enter-scale{
+  opacity:0;
+  transform:scale(1.06);
+  transition:opacity 1.2s var(--ease), transform 1.2s var(--ease);
+}
+.page-loaded .hero-enter-scale{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Scroll indicator entrance */
+.scroll-indicator{
+  opacity:0;
+  transition:opacity 0.6s var(--ease) 1s;
+}
+.page-loaded .scroll-indicator{
+  opacity:1;
 }
 
 /* ==========================================================================
@@ -929,63 +998,64 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   color:var(--ink);
   border-color:var(--accent);
 }
+.gallery-empty-space{
+  min-height:clamp(200px, 40vw, 400px);
+}
 .gallery-grid{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
-  gap:4px;
+  gap:2px;
 }
 .gallery-item{
   position:relative;
-  aspect-ratio:1;
   overflow:hidden;
   cursor:pointer;
+  background:transparent;
 }
 .gallery-item img{
-  width:100%; height:100%;
+  width:100%;
+  height:100%;
   object-fit:cover;
+  display:block;
   transition:transform var(--slow) var(--ease);
 }
-.gallery-item:hover img{ transform:scale(1.08); }
-.gallery-item.gallery-placeholder{
-  background:
-    linear-gradient(135deg, rgba(232,163,61,.08), transparent 60%),
-    repeating-linear-gradient(45deg, var(--ink-soft) 0px, var(--ink-soft) 2px, var(--ink) 2px, var(--ink) 34px);
-  display:flex; align-items:center; justify-content:center;
-}
-.gallery-item.gallery-placeholder::after{
-  content:attr(data-title);
-  font-family:var(--font-mono);
-  font-size:11px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:center;
-  padding:0 16px;
-}
+.gallery-item:hover img{ transform:scale(1.04); }
 .gallery-overlay{
   position:absolute; inset:0;
-  background:linear-gradient(180deg, transparent 40%, rgba(11,13,15,.85) 100%);
+  background:linear-gradient(180deg, transparent 50%, rgba(11,13,15,.75) 100%);
   display:flex; flex-direction:column; justify-content:flex-end;
-  padding:16px;
+  padding:12px;
   opacity:0;
   transition:opacity var(--fast) var(--ease);
+  pointer-events:none;
 }
 .gallery-item:hover .gallery-overlay{ opacity:1; }
 .gallery-title{
   font-family:var(--font-display);
-  font-size:16px;
+  font-size:14px;
   font-weight:600;
+  color:#fff;
 }
 .gallery-category{
   font-family:var(--font-mono);
-  font-size:11px;
+  font-size:10px;
   color:var(--accent);
   text-transform:uppercase;
   letter-spacing:.06em;
 }
-
+@media (min-width:480px){
+  .gallery-item img{ aspect-ratio:4/3; }
+}
 @media (min-width:768px){
-  .gallery-grid{ grid-template-columns:repeat(4, 1fr); }
+  .gallery-grid{
+    grid-template-columns:repeat(3, 1fr);
+    gap:3px;
+  }
+  .gallery-title{ font-size:16px; }
+  .gallery-category{ font-size:11px; }
+}
+@media (min-width:1024px){
+  .gallery-grid{ grid-template-columns:repeat(4, 1fr); gap:4px; }
 }
 
 /* Gallery Modal */
@@ -1034,39 +1104,51 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (max-width:768px){
   .reveal{
     opacity:0;
-    transform:translateY(20px);
+    transform:translateY(20px) scale(0.98);
     transition:opacity .6s var(--ease), transform .6s var(--ease);
   }
-  .reveal.is-visible{ opacity:1; transform:translateY(0); }
-  .reveal-delay-1{ transition-delay:100ms; }
-  .reveal-delay-2{ transition-delay:200ms; }
-  .reveal-delay-3{ transition-delay:300ms; }
-  .reveal-delay-4{ transition-delay:400ms; }
+  .reveal.is-visible{ opacity:1; transform:translateY(0) scale(1); }
+  .reveal-delay-1{ transition-delay:80ms; }
+  .reveal-delay-2{ transition-delay:160ms; }
+  .reveal-delay-3{ transition-delay:240ms; }
+  .reveal-delay-4{ transition-delay:320ms; }
+  .reveal-delay-5{ transition-delay:400ms; }
+  .reveal-delay-6{ transition-delay:480ms; }
+
+  .reveal-section{
+    transform:translateY(24px) scale(0.98);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+
+  .reveal-image{
+    transform:scale(0.97);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
 
   .gallery-item{
-    transition:transform .4s var(--ease);
+    transition:transform .3s var(--ease);
   }
   .gallery-item:active{
     transform:scale(0.97);
   }
 
   .btn{
-    transition:transform .3s var(--ease), background .3s var(--ease);
+    transition:transform .25s var(--ease), background .25s var(--ease);
   }
   .btn:active{
     transform:scale(0.96);
   }
 
   .nav-links a{
-    transition:color .3s var(--ease), background .3s var(--ease);
+    transition:color .25s var(--ease), background .25s var(--ease);
   }
 
   .stat-card{
-    transition:transform .4s var(--ease);
+    transition:transform .35s var(--ease);
   }
 
   .testimonial-card{
-    transition:transform .4s var(--ease);
+    transition:transform .35s var(--ease);
   }
 
   .brand-card{
@@ -1075,5 +1157,151 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .brand-card:active{
     transform:scale(0.97);
   }
+
+  .value-card{
+    transition:transform .3s var(--ease);
+  }
+  .value-card:active{
+    transform:scale(0.97);
+  }
+}
+
+/* ==========================================================================
+   PREMIUM MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* Gallery filter transitions */
+.gallery-grid{
+  transition:opacity 0.3s var(--ease);
+}
+.gallery-grid.transitioning{
+  opacity:0.4;
+}
+
+/* Gallery image reveal on filter */
+.gallery-item{
+  transition:opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.gallery-item.entering{
+  opacity:0;
+  transform:scale(0.95);
+}
+.gallery-item.entering.is-visible{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Button hover micro-interactions */
+.btn{
+  position:relative;
+  overflow:hidden;
+}
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity:0;
+  transition:opacity 0.3s var(--ease);
+}
+.btn:hover::after{
+  opacity:1;
+}
+
+/* Nav link underline animation */
+.nav-links a{
+  position:relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  bottom:4px;
+  left:16px;
+  right:16px;
+  height:1px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform 0.3s var(--ease);
+}
+.nav-links a:hover::after{
+  transform:scaleX(1);
+  transform-origin:left;
+}
+
+/* Logo subtle pulse on hover */
+.nav-logo{
+  transition:transform 0.3s var(--ease);
+}
+.nav-logo:hover{
+  transform:scale(1.02);
+}
+
+/* Mobile menu toggle animation */
+.nav-toggle svg{
+  transition:transform 0.3s var(--ease);
+}
+.nav-toggle:hover svg{
+  transform:scale(1.1);
+}
+
+/* Footer link hover */
+.footer-col a{
+  transition:color 0.25s var(--ease), transform 0.25s var(--ease);
+  display:inline-block;
+}
+.footer-col a:hover{
+  transform:translateX(3px);
+}
+
+/* Hours row hover */
+.hours-row{
+  transition:background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.hours-row:hover{
+  background:rgba(255,255,255,0.03);
+  transform:translateX(4px);
+}
+
+/* Testimonial card subtle lift */
+.testimonial-card{
+  transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.testimonial-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* Value card subtle lift */
+.value-card{
+  transition:transform 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.value-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--accent);
+}
+
+/* Brand card subtle lift */
+.brand-card{
+  transition:background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.brand-card:hover{
+  transform:translateY(-1px);
+}
+
+/* Stat card subtle lift */
+.stat-card{
+  transition:transform 0.4s var(--ease);
+}
+.stat-card:hover{
+  transform:translateY(-2px);
+}
+
+/* Eyebrow line animation */
+.eyebrow::before{
+  transition:width 0.4s var(--ease);
+}
+.eyebrow:hover::before{
+  width:32px;
 }
 

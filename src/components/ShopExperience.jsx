@@ -9,7 +9,7 @@ export default function ShopExperience() {
           </h2>
         </div>
         <div className="shop-grid">
-          <div className="shop-main reveal">
+          <div className="shop-main reveal-section">
             <img
               src="/shop1.png"
               alt="Hindhusthan Electricals storefront"
@@ -19,7 +19,7 @@ export default function ShopExperience() {
             />
           </div>
           <div className="shop-sub-row">
-            <div className="reveal reveal-delay-1">
+            <div className="reveal-image reveal-delay-1">
               <img
                 src="/shop2.png"
                 alt="Store interior with shelves"
@@ -28,7 +28,7 @@ export default function ShopExperience() {
                 height="500"
               />
             </div>
-            <div className="reveal reveal-delay-2">
+            <div className="reveal-image reveal-delay-2">
               <img
                 src="/shop3.png"
                 alt="Counter and signage"

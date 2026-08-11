@@ -17,7 +17,7 @@ export default function Location() {
           </h2>
         </div>
         <div className="location-wrap">
-          <div className="location-details reveal">
+          <div className="location-details reveal-section">
             <p className="location-address">
               {brand.name}
               <small>
@@ -56,7 +56,7 @@ export default function Location() {
               </a>
             </div>
           </div>
-          <div className="location-map reveal reveal-delay-2">
+          <div className="location-map reveal-section reveal-delay-2">
             <iframe
               src={`https://www.google.com/maps?q=${contact.mapsQuery}&output=embed`}
               width="100%"
