@@ -18,6 +18,10 @@ export default function About() {
             Homeowners, electricians, and contractors all shop here because
             they know they'll find what they need at a fair price.
           </p>
+          <div className="intro-accent reveal-section reveal-delay-3">
+            <span className="intro-accent-line"></span>
+            <span className="intro-accent-text">Est. 2017</span>
+          </div>
         </div>
       </div>
     </section>

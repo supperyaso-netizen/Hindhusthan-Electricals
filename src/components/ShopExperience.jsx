@@ -14,6 +14,7 @@ export default function ShopExperience() {
               src="/shop1.png"
               alt="Hindhusthan Electricals storefront"
               loading="lazy"
+              decoding="async"
               width="900"
               height="650"
             />
@@ -24,6 +25,7 @@ export default function ShopExperience() {
                 src="/shop2.png"
                 alt="Store interior with shelves"
                 loading="lazy"
+                decoding="async"
                 width="500"
                 height="500"
               />
@@ -33,6 +35,7 @@ export default function ShopExperience() {
                 src="/shop3.png"
                 alt="Counter and signage"
                 loading="lazy"
+                decoding="async"
                 width="500"
                 height="500"
               />

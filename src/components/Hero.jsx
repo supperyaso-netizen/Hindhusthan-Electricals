@@ -5,8 +5,10 @@ export default function Hero() {
         <img
           src="/hero.png"
           alt="Hindhusthan Electricals storefront"
-          className="hero-bg hero-enter-scale"
+          className="hero-bg"
           loading="eager"
+          decoding="async"
+          fetchpriority="high"
           width="1920"
           height="1080"
         />
@@ -20,6 +22,10 @@ export default function Hero() {
           Quality electrical items and hardware supplies at the right price.
           Serving Dindigul since 2017.
         </p>
+        <div className="hero-cta-row hero-enter-up d4">
+          <a className="hero-cta hero-cta-primary" href="#visit">Visit Store</a>
+          <a className="hero-cta hero-cta-secondary" href="#products">View Products</a>
+        </div>
       </div>
       <div className="scroll-indicator" aria-hidden="true">
         <div className="scroll-line"></div>

@@ -35,10 +35,11 @@ export default function Testimonials() {
         <div className="testimonials-grid">
           {reviews.map((review, i) => (
             <div key={review.id} className={`testimonial-card reveal reveal-delay-${i + 1}`}>
+              <span className="testimonial-quote" aria-hidden="true">"</span>
               <div className="testimonial-stars">
                 {"★".repeat(review.rating)}
               </div>
-              <p className="testimonial-text">"{review.text}"</p>
+              <p className="testimonial-text">{review.text}</p>
               <div className="testimonial-author">
                 <div className="testimonial-avatar">
                   {review.name.charAt(0)}
