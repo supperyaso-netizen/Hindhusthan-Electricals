@@ -1439,7 +1439,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* Footer link hover */
 .footer-col a{
   transition:color 0.25s var(--ease), transform 0.25s var(--ease);
-  display:inline-block;
 }
 .footer-col a:hover{
   transform:translateX(3px);
