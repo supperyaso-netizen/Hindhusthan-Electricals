@@ -1065,11 +1065,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:clamp(28px, 4vw, 40px);
   width:auto;
   object-fit:contain;
-  filter:grayscale(100%);
-  transition:filter var(--fast) var(--ease), transform var(--fast) var(--ease);
+  transition:transform var(--fast) var(--ease);
 }
 .brand-card:hover .brand-logo{
-  filter:grayscale(0%);
   transform:scale(1.05);
 }
 
