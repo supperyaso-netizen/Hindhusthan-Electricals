@@ -322,9 +322,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (max-width:768px){
   .hero{
     min-height:100svh;
+    padding-bottom:clamp(24px, 6vw, 48px);
   }
   .hero-media .hero-bg{
     object-position:40% center;
+  }
+  .scroll-indicator{
+    display:none;
+  }
+  .hero-cta-row{
+    padding-bottom:0;
   }
 }
 .hero-media::after{
@@ -341,6 +348,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   max-width:16ch;
   line-height:1.02;
   letter-spacing:-0.02em;
+  color:#fff;
 }
 .hero-title em{
   font-style:normal;
@@ -350,7 +358,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   margin-top:clamp(16px, 3vw, 28px);
   max-width:44ch;
   font-size:clamp(15px,2vw,18px);
-  color:var(--paper-dim);
+  color:rgba(255,255,255,.78);
   font-weight:400;
   line-height:1.6;
 }
@@ -359,6 +367,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display:flex;
   flex-wrap:wrap;
   gap:14px;
+  padding-bottom:48px;
 }
 .hero-cta{
   display:inline-flex;
@@ -377,19 +386,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .hero-cta-primary{
   background:var(--accent);
-  color:var(--ink);
+  color:#fff;
 }
 .hero-cta-primary:hover{
   transform:translateY(-2px);
   background:var(--accent-soft);
 }
 .hero-cta-secondary{
-  border:1px solid var(--line);
-  color:var(--paper);
+  border:1px solid rgba(255,255,255,.35);
+  color:#fff;
 }
 .hero-cta-secondary:hover{
-  border-color:var(--accent);
-  color:var(--accent);
+  border-color:rgba(255,255,255,.7);
   transform:translateY(-2px);
 }
 .hero-cta::after{
@@ -410,7 +418,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   font-family:var(--font-mono);
   font-size:11px;
   letter-spacing:.12em;
-  color:var(--muted);
+  color:rgba(255,255,255,.45);
   opacity:0;
   transition:opacity 0.6s var(--ease) 1.2s;
 }
@@ -419,7 +427,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .scroll-line{
   width:1px; height:40px;
-  background:var(--line);
+  background:rgba(255,255,255,.2);
   position:relative;
   overflow:hidden;
 }
