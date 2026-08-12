@@ -21,6 +21,7 @@ export default function Loader() {
     <div id="loader" className={hidden ? "hidden" : ""} aria-hidden="true">
       <div className="loader-mark">
         HINDHUSTHAN
+        <small>Electricals &amp; Hardwares</small>
         <div className="loader-current"></div>
       </div>
     </div>

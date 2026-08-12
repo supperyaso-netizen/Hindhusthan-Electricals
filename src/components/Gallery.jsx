@@ -30,8 +30,37 @@ export default function Gallery() {
       <div className="container">
         <div className="section-head">
           <span className="eyebrow reveal">What We Stock</span>
-          <h2 className="reveal reveal-delay-1">Our Shop</h2>
-          <p className="reveal reveal-delay-2">From daily essentials to specialized items — see what's available in store.</p>
+          <h2 className="reveal reveal-delay-1">Everything you need, in store</h2>
+          <p className="reveal reveal-delay-2">
+            From daily essentials to specialized items — explore what's
+            available on our shelves.
+          </p>
+        </div>
+
+        <div className="category-feature reveal-section">
+          <div className="category-feature-media">
+            <img
+              src="/shop1.png"
+              alt="Hindhusthan Electricals product range"
+              loading="lazy"
+              decoding="async"
+            />
+            <div className="category-feature-overlay" />
+            <span className="category-feature-badge">Electrical · Hardware · Plumbing</span>
+          </div>
+          <div className="category-feature-body">
+            <span className="eyebrow">Category Spotlight</span>
+            <h3>Every product a reliable build needs.</h3>
+            <p>
+              From modular switches and wiring to fans, lighting and power
+              tools — we stock the essentials contractors and homeowners
+              reach for again and again.
+            </p>
+            <a className="category-feature-link" href="#visit">
+              Explore in store
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
 
         <div className="gallery-filters reveal reveal-delay-3">
@@ -48,11 +77,11 @@ export default function Gallery() {
 
         <div className="products-grid">
           {filtered.map((product) => (
-            <div key={product.id} className="product-card">
+            <article key={product.id} className="product-card">
               <p className="product-category">{product.category}</p>
               <h3 className="product-name">{product.name}</h3>
               <p className="product-price">{product.price}</p>
-            </div>
+            </article>
           ))}
         </div>
       </div>
