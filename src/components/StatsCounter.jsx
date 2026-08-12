@@ -59,11 +59,14 @@ export default function StatsCounter() {
   return (
     <section className="section stats-section">
       <div className="container">
-        <div className="stats-grid">
+        <div className="stats-row">
           {stats.map((stat, i) => (
-            <div key={i} className={`stat-card reveal reveal-delay-${i + 1}`}>
-              <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-              <p className="stat-label">{stat.label}</p>
+            <div key={i} className="stats-cell-group">
+              {i > 0 && <span className="stats-divider" aria-hidden="true" />}
+              <div className={`stat-card reveal reveal-delay-${i + 1}`}>
+                <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                <p className="stat-label">{stat.label}</p>
+              </div>
             </div>
           ))}
         </div>
