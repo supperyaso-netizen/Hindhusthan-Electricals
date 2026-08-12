@@ -50,7 +50,7 @@ export default function Gallery() {
 
         <div className="products-grid">
           {filtered.map((product) => (
-            <div key={product.id} className="product-card reveal">
+            <div key={product.id} className="product-card">
               <p className="product-category">{product.category}</p>
               <h3 className="product-name">{product.name}</h3>
               <p className="product-price">{product.price}</p>
