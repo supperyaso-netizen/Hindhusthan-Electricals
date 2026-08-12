@@ -34,7 +34,7 @@ export default function ShopExperience() {
         />
       </div>
       <div className="container">
-        <p className="shop-caption reveal reveal-delay-3">
+        <p className="shop-caption">
           Take a quick look at the store before you visit.
         </p>
       </div>
