@@ -2,7 +2,7 @@
    HINDHUSTHAN — PREMIUM DIGITAL SHOWROOM
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root{
   /* Color */
@@ -20,7 +20,7 @@
   /* Type */
   --font-display:'Poppins', sans-serif;
   --font-body:'Poppins', sans-serif;
-  --font-mono:'JetBrains Mono', monospace;
+  --font-mono:'Poppins', sans-serif;
 
   /* Spacing - generous editorial scale */
   --gutter: clamp(24px, 5vw, 64px);
