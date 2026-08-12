@@ -32,21 +32,21 @@ export default function WhyChooseUs() {
           <p className="eyebrow reveal">Why choose us</p>
           <h2 className="reveal reveal-delay-1">What makes us different.</h2>
         </div>
-      </div>
-      <div className="values-grid">
-        {SHOP_CONFIG.values.map((v, i) => {
-          const delay = (i % 4) + 1;
-          return (
-            <div
-              key={i}
-              className={`value-card reveal reveal-delay-${delay}`}
-            >
-              {valueIcons[i]}
-              <h3>{v.title}</h3>
-              <p>{v.desc}</p>
-            </div>
-          );
-        })}
+        <div className="values-grid">
+          {SHOP_CONFIG.values.map((v, i) => {
+            const delay = (i % 4) + 1;
+            return (
+              <div
+                key={i}
+                className={`value-card reveal reveal-delay-${delay}`}
+              >
+                {valueIcons[i]}
+                <h3>{v.title}</h3>
+                <p>{v.desc}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

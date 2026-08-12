@@ -418,7 +418,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   font-family:var(--font-mono);
   font-size:11px;
   letter-spacing:.12em;
-  color:rgba(255,255,255,.45);
+  color:#000;
   opacity:0;
   transition:opacity 0.6s var(--ease) 1.2s;
 }
@@ -427,7 +427,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .scroll-line{
   width:1px; height:40px;
-  background:rgba(255,255,255,.2);
+  background:rgba(0,0,0,.2);
   position:relative;
   overflow:hidden;
 }
@@ -568,24 +568,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   font-size:clamp(15px,1.5vw,17px);
   line-height:1.7;
   max-width:52ch;
-}
-.intro-accent{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin-top:clamp(24px,4vw,40px);
-}
-.intro-accent-line{
-  width:40px;
-  height:1px;
-  background:var(--accent);
-}
-.intro-accent-text{
-  font-family:var(--font-mono);
-  font-size:12px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--muted);
 }
 
 @media (min-width:900px){
@@ -741,11 +723,27 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border:1px solid var(--line);
   border-radius:var(--radius);
   padding:clamp(24px, 4vw, 36px);
-  transition:transform 0.4s var(--ease), border-color 0.4s var(--ease);
+  transition:transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.value-card::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.4s var(--ease);
 }
 .value-card:hover{
-  transform:translateY(-2px);
+  transform:translateY(-4px);
   border-color:var(--accent);
+  box-shadow:0 12px 40px -12px rgba(11,13,15,0.15);
+}
+.value-card:hover::before{
+  transform:scaleX(1);
 }
 .value-icon{
   width:36px; height:36px;
@@ -1293,6 +1291,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     transform:none;
     box-shadow:none;
   }
+  .value-card::before{ transform:scaleX(1); }
   .nav-logo:hover{ transform:none; }
   .footer-col a:hover{ transform:none; }
   .hours-row:hover{ transform:none; background:none; }
@@ -1408,15 +1407,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .testimonial-card:hover{
   transform:translateY(-2px);
-}
-
-/* Value card subtle lift */
-.value-card{
-  transition:transform 0.4s var(--ease), border-color 0.4s var(--ease);
-}
-.value-card:hover{
-  transform:translateY(-2px);
-  border-color:var(--accent);
 }
 
 /* Brand card subtle lift */
