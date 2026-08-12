@@ -18,14 +18,12 @@ const products = [
   { id: 15, category: "hardware", name: "Pipe Wrench 12inch", price: "₹420" },
 ];
 
-const categories = ["all", "lighting", "fans", "switches", "wiring", "hardware"];
+const categories = ["lighting", "fans", "switches", "wiring", "hardware"];
 
 export default function Gallery() {
-  const [active, setActive] = useState("all");
+  const [active, setActive] = useState("lighting");
 
-  const filtered = active === "all"
-    ? products
-    : products.filter((p) => p.category === active);
+  const filtered = products.filter((p) => p.category === active);
 
   return (
     <section className="section gallery-section" id="products">
