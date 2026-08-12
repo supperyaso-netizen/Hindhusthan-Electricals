@@ -1,19 +1,26 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-const useMedia = (queries, values, defaultValue) => {
+const QUERIES = [
+  "(min-width:1500px)",
+  "(min-width:1000px)",
+  "(min-width:600px)",
+  "(min-width:400px)",
+];
+
+const useMedia = (values, defaultValue) => {
   const get = () => {
     if (typeof window === "undefined") return defaultValue;
-    return values[queries.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
+    return values[QUERIES.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
   };
 
   const [value, setValue] = useState(get);
 
   useEffect(() => {
     const handler = () => setValue(get);
-    queries.forEach((q) => matchMedia(q).addEventListener("change", handler));
-    return () => queries.forEach((q) => matchMedia(q).removeEventListener("change", handler));
-  }, [queries]);
+    QUERIES.forEach((q) => matchMedia(q).addEventListener("change", handler));
+    return () => QUERIES.forEach((q) => matchMedia(q).removeEventListener("change", handler));
+  }, []);
 
   return value;
 };
@@ -59,11 +66,7 @@ const Masonry = ({
   blurToFocus = true,
   colorShiftOnHover = false,
 }) => {
-  const columns = useMedia(
-    ["(min-width:1500px)", "(min-width:1000px)", "(min-width:600px)", "(min-width:400px)"],
-    [5, 4, 3, 2],
-    1
-  );
+  const columns = useMedia([5, 4, 3, 2], 1);
 
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
