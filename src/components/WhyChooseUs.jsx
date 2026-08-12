@@ -25,24 +25,31 @@ const valueIcons = [
 ];
 
 export default function WhyChooseUs() {
+  const values = SHOP_CONFIG.values;
+
   return (
-    <section className="section" id="why-us">
+    <section className="section section-alt" id="why-us">
       <div className="container">
         <div className="section-head">
           <p className="eyebrow reveal">Why choose us</p>
           <h2 className="reveal reveal-delay-1">What makes us different.</h2>
         </div>
         <div className="values-grid">
-          {SHOP_CONFIG.values.map((v, i) => {
+          {values.map((v, i) => {
             const delay = (i % 4) + 1;
             return (
-              <div
-                key={i}
-                className={`value-card reveal reveal-delay-${delay}`}
-              >
-                {valueIcons[i]}
-                <h3>{v.title}</h3>
-                <p>{v.desc}</p>
+              <div key={i} className={`reveal reveal-delay-${delay}`}>
+                <div className="value-card">
+                  <span className="value-number" aria-hidden="true">
+                    0{i + 1}
+                  </span>
+                  {valueIcons[i]}
+                  <h3>{v.title}</h3>
+                  <p>{v.desc}</p>
+                </div>
+                {i < values.length - 1 && (
+                  <div className="value-separator" />
+                )}
               </div>
             );
           })}
