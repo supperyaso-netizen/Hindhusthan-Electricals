@@ -954,6 +954,26 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .status-line::after{ animation:none; width:100%; opacity:.4; }
 }
 
+/* Light Theme (default) */
+[data-theme="light"]{
+  --ink:#F3F1EC;
+  --ink-soft:#FFFFFF;
+  --paper:#0B0D0F;
+  --paper-dim:#1A1D21;
+  --muted:#6B6F76;
+  --line:#DDD9CF;
+  --line-soft:#2A2E33;
+}
+[data-theme="light"] .nav{
+  background:transparent;
+}
+[data-theme="light"] .nav.scrolled{
+  background:rgba(243,241,236,.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-color:var(--line);
+}
+
 /* ==========================================================================
    STATS COUNTER
    ========================================================================== */
