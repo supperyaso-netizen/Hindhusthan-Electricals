@@ -218,7 +218,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   text-transform:uppercase;
   border:2px solid var(--accent);
   padding:12px 24px;
-  border-radius:var(--radius);
+  border-radius:999px;
   background:transparent;
   color:var(--accent);
   font-weight:500;
@@ -236,7 +236,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   opacity:0;
   transition:opacity .3s ease;
   z-index:-1;
-  border-radius:var(--radius);
+  border-radius:999px;
 }
 .nav-cta:hover{
   color:#fff;
@@ -283,6 +283,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   box-sizing:border-box;
   padding:14px 24px;
   border:1px solid var(--accent);
+  border-radius:999px;
   font-size:13px;
   letter-spacing:.06em;
   line-height:1;
@@ -374,7 +375,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   align-items:center;
   gap:10px;
   padding:clamp(14px, 2vw, 18px) clamp(24px, 3vw, 32px);
-  border-radius:var(--radius);
+  border-radius:999px;
   font-family:var(--font-mono);
   font-size:clamp(12px, 1.5vw, 14px);
   letter-spacing:.05em;
@@ -790,7 +791,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .btn{
   display:inline-flex; align-items:center; gap:10px;
   padding:14px 28px;
-  border-radius:var(--radius);
+  border-radius:999px;
   font-family:var(--font-mono);
   font-size:13px; letter-spacing:.05em;
   transition:transform var(--fast) var(--ease), background var(--fast) var(--ease), border-color var(--fast) var(--ease);
@@ -997,10 +998,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   width:1px; height:40%;
   transform:translateY(-50%);
   background:var(--line);
-}
-.stat-card:last-child::after,
-.stat-card:nth-child(2)::after{
   display:none;
+}
+.stat-card:nth-child(odd)::after{
+  display:block;
 }
 .stat-number{
   display:block;
@@ -1022,9 +1023,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (min-width:640px){
   .stats-grid{ grid-template-columns:repeat(4, 1fr); }
   .stat-card::after{ display:block; }
-  .stat-card:nth-child(2)::after{ display:block; }
-  .stat-card:nth-child(3)::after{ display:none; }
-  .stat-card:nth-child(4)::after{ display:none; }
+  .stat-card:last-child::after{ display:none; }
 }
 
 /* ==========================================================================
