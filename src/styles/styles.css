@@ -1036,31 +1036,31 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .brands-grid{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
-  gap:2px;
-  background:var(--line);
-  border:1px solid var(--line);
+  gap:clamp(24px, 4vw, 48px);
+  align-items:center;
+  justify-items:center;
 }
 .brand-card{
-  background:var(--ink);
-  padding:clamp(24px, 4vw, 40px);
+  padding:clamp(16px, 3vw, 32px);
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:12px;
-  min-height:120px;
-  transition:background var(--fast) var(--ease);
+  min-height:80px;
+  transition:opacity var(--fast) var(--ease);
+  opacity:0.55;
 }
 .brand-card:hover{
-  background:var(--ink-soft);
+  opacity:1;
 }
 .brand-logo{
-  height:40px;
+  height:clamp(28px, 4vw, 40px);
   width:auto;
   object-fit:contain;
-  transition:transform var(--fast) var(--ease);
+  filter:grayscale(100%);
+  transition:filter var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
 .brand-card:hover .brand-logo{
+  filter:grayscale(0%);
   transform:scale(1.05);
 }
 
@@ -1298,8 +1298,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
   /* Disable expensive hover effects on mobile */
   .testimonial-card:hover,
-  .value-card:hover,
-  .brand-card:hover{
+  .value-card:hover{
     transform:none;
     box-shadow:none;
   }
@@ -1419,14 +1418,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .testimonial-card:hover{
   transform:translateY(-2px);
-}
-
-/* Brand card subtle lift */
-.brand-card{
-  transition:background 0.3s var(--ease), transform 0.3s var(--ease);
-}
-.brand-card:hover{
-  transform:translateY(-1px);
 }
 
 /* Eyebrow line animation */

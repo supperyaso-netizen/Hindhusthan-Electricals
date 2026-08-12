@@ -30,7 +30,7 @@ export default function Navbar() {
           <nav className="nav-links" aria-label="Primary">
             <a href="#top">Home</a>
             <a href="#about">About</a>
-            <a href="#products">Products</a>
+            <a href="#products">Shop</a>
             <a href="#reviews">Reviews</a>
             <a href="#visit">Visit Us</a>
           </nav>
