@@ -5,6 +5,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const callUrl = `tel:${SHOP_CONFIG.contact.phone.replace(/\s+/g, "")}`;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${SHOP_CONFIG.contact.mapsQuery}`;
 
   useEffect(() => {
@@ -29,18 +30,20 @@ export default function Navbar() {
           </a>
           <nav className="nav-links" aria-label="Primary">
             <a href="#top">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Shop</a>
+            <a href="#about">About Us</a>
+            <a href="#products">Products</a>
+            <a href="#shop">Brands</a>
             <a href="#reviews">Reviews</a>
-            <a href="#visit">Visit Us</a>
+            <a href="#visit">Contact</a>
           </nav>
           <a
             className="nav-cta nav-enter"
-            href={mapsUrl}
-            target="_blank"
-            rel="noopener"
+            href={callUrl}
           >
-            Get Directions
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16" style={{marginRight:4}}>
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Call Us
           </a>
           <button
             className="nav-toggle"
@@ -65,25 +68,26 @@ export default function Navbar() {
           Home
         </a>
         <a href="#about" onClick={closeMenu}>
-          About
+          About Us
         </a>
         <a href="#products" onClick={closeMenu}>
           Products
+        </a>
+        <a href="#shop" onClick={closeMenu}>
+          Brands
         </a>
         <a href="#reviews" onClick={closeMenu}>
           Reviews
         </a>
         <a href="#visit" onClick={closeMenu}>
-          Visit Us
+          Contact
         </a>
         <a
           className="nav-cta"
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener"
+          href={callUrl}
           onClick={closeMenu}
         >
-          Get Directions
+          Call Us
         </a>
       </div>
     </>
