@@ -19,8 +19,8 @@ export default function HomePage() {
       <About />
       <StatsCounter />
       <Brands />
-      <Gallery />
       <ShopExperience />
+      <Gallery />
       <Testimonials />
       <WhyChooseUs />
       <Location />
