@@ -145,11 +145,6 @@ export default function StatsReel() {
 
       <div className="container">
         <div className="stats-composition">
-          <div className="stats-label">
-            <span className="stats-label-mark" aria-hidden="true"></span>
-            By The Numbers
-          </div>
-
           <div className="stat-primary">
             <StatValue stat={primary} inView={inView} className="stat-value stat-value-lg" />
             <span className="stat-label">{primary.label}</span>
