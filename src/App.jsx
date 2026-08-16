@@ -5,9 +5,12 @@ import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
 import Offline from "./pages/Offline";
+import useSmoothScroll from "./hooks/useSmoothScroll";
 import "./styles/styles.css";
 
 export default function App() {
+  useSmoothScroll();
+
   return (
     <BrowserRouter>
       <Loader />

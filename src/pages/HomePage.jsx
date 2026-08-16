@@ -1,13 +1,13 @@
 import useScrollReveal from "../hooks/useScrollReveal";
 import Hero from "../components/Hero";
 import About from "../components/About";
+import StatsReel from "../components/StatsReel";
 import Brands from "../components/Brands";
 import Gallery from "../components/Gallery";
 import ShopExperience from "../components/ShopExperience";
 import Testimonials from "../components/Testimonials";
 import WhyChooseUs from "../components/WhyChooseUs";
 import Location from "../components/Location";
-import FinalCTA from "../components/FinalCTA";
 
 export default function HomePage() {
   useScrollReveal();
@@ -16,13 +16,13 @@ export default function HomePage() {
     <main id="top">
       <Hero />
       <About />
+      <StatsReel />
       <Brands />
-      <ShopExperience />
       <Gallery />
+      <ShopExperience />
       <Testimonials />
       <WhyChooseUs />
       <Location />
-      <FinalCTA />
     </main>
   );
 }

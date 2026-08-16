@@ -24,7 +24,7 @@ export default function Navbar() {
     <>
       <header className={`nav${scrolled ? " scrolled" : ""}`}>
         <div className="container nav-inner">
-          <a href="#top" className="nav-logo nav-enter">
+          <a href="#top" className="nav-logo nav-enter" aria-label="Hindhusthan Electricals - Home">
             <img src="/logo.png" alt="Hindhusthan Electricals" className="logo-img" />
           </a>
           <nav className="nav-links nav-enter" aria-label="Primary">

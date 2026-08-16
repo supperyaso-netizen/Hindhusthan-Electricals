@@ -104,14 +104,14 @@ const Masonry = ({
     preloadImages(items.map((i) => i.img)).then(() => setImagesReady(true));
   }, [items]);
 
-  const grid = useMemo(() => {
-    if (!width) return [];
+  const { items: grid, totalHeight } = useMemo(() => {
+    if (!width) return { items: [], totalHeight: 0 };
     const colHeights = new Array(columns).fill(0);
     const gap = 16;
     const totalGaps = (columns - 1) * gap;
     const columnWidth = (width - totalGaps) / columns;
 
-    return items.map((child) => {
+    const laid = items.map((child) => {
       const col = colHeights.indexOf(Math.min(...colHeights));
       const x = col * (columnWidth + gap);
       const height = child.height / 2;
@@ -120,6 +120,7 @@ const Masonry = ({
       colHeights[col] += height + gap;
       return { ...child, x, y, w: columnWidth, h: height };
     });
+    return { items: laid, totalHeight: Math.max(...colHeights) };
   }, [columns, items, width]);
 
   const hasMounted = useRef(false);
@@ -194,7 +195,7 @@ const Masonry = ({
   };
 
   return (
-    <div ref={containerRef} className="masonry-container">
+    <div ref={containerRef} className="masonry-container" style={{ height: totalHeight || undefined }}>
       {grid.map((item) => (
         <div
           key={item.id}

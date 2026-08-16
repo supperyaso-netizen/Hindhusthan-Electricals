@@ -1,8 +1,14 @@
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const stats = [
-  { label: "Years in Business", value: "8+" },
   { label: "Products in Store", value: "2000+" },
+  { label: "Top Brands", value: "50+" },
+  { label: "Years in Business", value: "8+" },
   { label: "Happy Customers", value: "3500+" },
-  { label: "Brands Available", value: "50+" },
 ];
 
 const features = [
@@ -37,9 +43,49 @@ const features = [
 ];
 
 export default function Hero() {
+  const heroRef = useRef(null);
+  const mediaRef = useRef(null);
+  const contentRef = useRef(null);
+  const featuresRef = useRef(null);
+  const statsRef = useRef(null);
+  const scrimRef = useRef(null);
+
+  useEffect(() => {
+    const media = mediaRef.current;
+    const content = contentRef.current;
+    const features = featuresRef.current;
+    const stats = statsRef.current;
+    const scrim = scrimRef.current;
+    const hero = heroRef.current;
+    if (!media || !content || !features || !stats || !scrim || !hero) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 769) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        defaults: { ease: "power1.inOut" },
+        scrollTrigger: {
+          trigger: hero,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      tl.to(media, { scale: 1.06, yPercent: 4, duration: 1 }, 0)
+        .to(scrim, { opacity: 0.55, duration: 1 }, 0)
+        .to(content, { yPercent: -8, opacity: 0, duration: 1 }, 0)
+        .to(features, { yPercent: -10, opacity: 0, duration: 1 }, 0)
+        .to(stats, { yPercent: -14, opacity: 0, duration: 1 }, 0);
+    }, hero);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="hero" id="top">
-      <div className="hero-media" aria-hidden="true">
+    <section className="hero" id="top" ref={heroRef}>
+      <div className="hero-media" ref={mediaRef} aria-hidden="true">
         <img
           src="/hero.png"
           alt="Hindhusthan Electricals showroom"
@@ -52,53 +98,66 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container hero-content">
-        <span className="eyebrow hero-enter-up d1">Since 2017 · Electricals · Hardware</span>
-        <h1 className="hero-title hero-enter-up d2">
-          Building better <em>spaces</em> with quality products
-        </h1>
-        <p className="hero-sub hero-enter-up d3">
-          Your one-stop destination for electricals, hardware and building
-          supplies. Serving Dindigul with trusted brands and fair prices.
-        </p>
-        <div className="hero-cta-row hero-enter-up d4">
-          <a className="hero-cta hero-cta-primary" href="#products">
-            Explore Products
-            <span className="hero-cta-arrow" aria-hidden="true">→</span>
-          </a>
-          <a className="hero-cta hero-cta-secondary" href="#gallery">
-            View Catalogue
-          </a>
+      <div className="hero-overlay" aria-hidden="true"></div>
+      <div className="hero-scrim" ref={scrimRef} aria-hidden="true"></div>
+
+      <div className="hero-container">
+        <div className="hero-content" ref={contentRef}>
+          <span className="eyebrow hero-enter-up d1">Since 2017</span>
+          <h1 className="hero-title hero-enter-up d2">
+            Building better
+            <br />
+            <em>spaces</em> with
+            <br />
+            quality products
+          </h1>
+          <p className="hero-sub hero-enter-up d3">
+            Your trusted destination for electricals, hardware and building
+            supplies. Serving Dindigul with trusted brands and fair prices.
+          </p>
+
+          <div className="hero-features hero-enter-up d4" role="list" ref={featuresRef}>
+            {features.map((f, i) => (
+              <div className="hero-feature" role="listitem" key={i}>
+                <span className="hero-feature-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" width="22" height="22">{f.icon}</svg>
+                </span>
+                <span className="hero-feature-title">{f.title}</span>
+                <span className="hero-feature-desc">{f.desc}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="hero-cta-row hero-enter-up d5">
+            <a className="hero-cta hero-cta-primary" href="#products">
+              Explore Products
+              <span className="hero-cta-arrow" aria-hidden="true">→</span>
+            </a>
+            <a className="hero-cta hero-cta-secondary" href="#gallery">
+              View Catalogue
+              <span className="hero-cta-arrow" aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="hero-stats hero-enter-up d7" ref={statsRef}>
+          {stats.map((s) => (
+            <div key={s.label} className="hero-stat">
+              <span className="hero-stat-value">{s.value}</span>
+              <span className="hero-stat-label">{s.label}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="container hero-features hero-enter-up d3" role="list">
-        {features.map((f, i) => (
-          <div className="hero-feature" role="listitem" key={i}>
-            <span className="hero-feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" width="22" height="22">{f.icon}</svg>
-            </span>
-            <div>
-              <span className="hero-feature-title">{f.title}</span>
-              <span className="hero-feature-desc">{f.desc}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="container hero-stats-bar">
-        {stats.map((s, i) => (
-          <div key={s.label} className={`hero-stat hero-enter-up d${i + 1}`}>
-            <span className="hero-stat-value">{s.value}</span>
-            <span className="hero-stat-label">{s.label}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="scroll-indicator" aria-hidden="true">
-        <div className="scroll-line"></div>
-        SCROLL
-      </div>
+      <a className="hero-scroll" href="#about" aria-label="Scroll down to continue">
+        <div className="scroll-pill" aria-hidden="true">
+          <span className="scroll-dot"></span>
+        </div>
+        <span className="scroll-label">Scroll Down</span>
+        <div className="scroll-line" aria-hidden="true"></div>
+        <span className="scroll-arrow" aria-hidden="true">↓</span>
+      </a>
     </section>
   );
 }

@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const products = [
   { id: 1, category: "lighting", name: "LED Panel Light 18W", price: "₹320" },
@@ -20,21 +24,130 @@ const products = [
 
 const categories = ["lighting", "fans", "switches", "wiring", "hardware"];
 
+const showCategories = [
+  { id: "electrical", name: "Electrical", desc: "Everyday electrical essentials for home and workspace." },
+  { id: "lighting", name: "Lighting", desc: "Gate lights, night lamps and fittings for every room." },
+  { id: "wiring", name: "Wiring & Cables", desc: "Reliable cabling for safe, lasting installations." },
+  { id: "hardware", name: "Hardware", desc: "Fasteners, fittings and tools built for daily work." },
+];
+
 export default function Gallery() {
   const [active, setActive] = useState("lighting");
+  const sectionRef = useRef(null);
 
   const filtered = products.filter((p) => p.category === active);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 769) return;
+
+    const ctx = gsap.context(() => {
+      const rows = gsap.utils.toArray(".showcase-row");
+
+      gsap.fromTo(
+        rows,
+        { autoAlpha: 0, yPercent: 12 },
+        {
+          autoAlpha: 1,
+          yPercent: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          stagger: 0.14,
+          scrollTrigger: {
+            trigger: ".products-showcase",
+            start: "top 72%",
+          },
+        }
+      );
+
+      const medias = gsap.utils.toArray(".showcase-media img");
+      medias.forEach((img) => {
+        gsap.fromTo(
+          img,
+          { scale: 1.12 },
+          {
+            scale: 1,
+            duration: 1.4,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: img,
+              start: "top 82%",
+            },
+          }
+        );
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 769) return;
+
+    const cards = section.querySelectorAll(".product-card");
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        { autoAlpha: 0, y: 24 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.06,
+          overwrite: "auto",
+        }
+      );
+    }, section);
+
+    return () => ctx.revert();
+  }, [active]);
+
   return (
-    <section className="section gallery-section" id="products">
+    <section className="section gallery-section" id="products" ref={sectionRef}>
       <div className="container">
         <div className="section-head">
-          <span className="eyebrow reveal">What We Stock</span>
-          <h2 className="reveal reveal-delay-1">Everything you need, in store</h2>
+          <span className="eyebrow reveal">Our Collection</span>
+          <h2 className="reveal reveal-delay-1">
+            Products for <em className="accent-word">every space</em>
+          </h2>
           <p className="reveal reveal-delay-2">
             From daily essentials to specialized items — explore what's
             available on our shelves.
           </p>
+        </div>
+
+        <div className="products-showcase">
+          {showCategories.map((cat, i) => (
+            <article className="showcase-row" key={cat.id}>
+              <div className="showcase-media">
+                <img
+                  src={i % 2 === 0 ? "/shop1.png" : "/shop3.png"}
+                  alt={cat.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="showcase-media-overlay" />
+                <span className="showcase-index">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <div className="showcase-body">
+                <span className="eyebrow">Category</span>
+                <h3>{cat.name}</h3>
+                <p>{cat.desc}</p>
+                <a className="category-feature-link" href="#visit">
+                  Explore in store
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
 
         <div className="category-feature reveal-section">
