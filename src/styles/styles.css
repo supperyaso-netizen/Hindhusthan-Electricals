@@ -1704,7 +1704,7 @@ button, a{
   font-weight:800;
   line-height:.95;
   letter-spacing:-0.04em;
-  color:#F6F6F3;
+  color:var(--accent);
   transition:transform 0.3s var(--ease);
 }
 .stat-value-lg{
