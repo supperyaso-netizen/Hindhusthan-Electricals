@@ -1,15 +1,62 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function useCountUp(target, duration = 1.2) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const start = performance.now();
+          const animate = (now) => {
+            const elapsed = (now - start) / (duration * 1000);
+            if (elapsed >= 1) {
+              setCount(target);
+              return;
+            }
+            const eased = 1 - Math.pow(1 - elapsed, 3);
+            setCount(Math.round(eased * target));
+            requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
 const stats = [
-  { label: "Products in Store", value: "2000+" },
-  { label: "Top Brands", value: "50+" },
-  { label: "Years in Business", value: "8+" },
-  { label: "Happy Customers", value: "3500+" },
+  { label: "Products in Store", target: 2000, suffix: "+" },
+  { label: "Top Brands", target: 50, suffix: "+" },
+  { label: "Years in Business", target: 8, suffix: "+" },
+  { label: "Happy Customers", target: 3500, suffix: "+" },
 ];
+
+function StatItem({ stat }) {
+  const { count, ref } = useCountUp(stat.target, 1.4);
+  return (
+    <div className="hero-stat" ref={ref}>
+      <span className="hero-stat-value">{count.toLocaleString()}{stat.suffix}</span>
+      <span className="hero-stat-label">{stat.label}</span>
+    </div>
+  );
+}
 
 const features = [
   {
@@ -42,6 +89,8 @@ const features = [
   },
 ];
 
+const heroWords = ["Building", "better", "spaces", "with", "quality", "products"];
+
 export default function Hero() {
   const heroRef = useRef(null);
   const mediaRef = useRef(null);
@@ -49,15 +98,25 @@ export default function Hero() {
   const featuresRef = useRef(null);
   const statsRef = useRef(null);
   const scrimRef = useRef(null);
+  const titleRef = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    const media = mediaRef.current;
+    if (!media) return;
+    const img = media.querySelector(".hero-bg");
+    if (!img) return;
+    const { left, top, width, height } = media.getBoundingClientRect();
+    const x = ((e.clientX - left) / width - 0.5) * 2;
+    const y = ((e.clientY - top) / height - 0.5) * 2;
+    gsap.to(img, { xPercent: x * 15, yPercent: y * 10, duration: 1.6, ease: "power2.out" });
+  }, []);
 
   useEffect(() => {
     const media = mediaRef.current;
     const content = contentRef.current;
-    const features = featuresRef.current;
-    const stats = statsRef.current;
     const scrim = scrimRef.current;
     const hero = heroRef.current;
-    if (!media || !content || !features || !stats || !scrim || !hero) return;
+    if (!media || !content || !scrim || !hero) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced || window.innerWidth < 769) return;
@@ -75,13 +134,44 @@ export default function Hero() {
 
       tl.to(media, { scale: 1.06, yPercent: 4, duration: 1 }, 0)
         .to(scrim, { opacity: 0.55, duration: 1 }, 0)
-        .to(content, { yPercent: -8, opacity: 0, duration: 1 }, 0)
-        .to(features, { yPercent: -10, opacity: 0, duration: 1 }, 0)
-        .to(stats, { yPercent: -14, opacity: 0, duration: 1 }, 0);
+        .to(content, { yPercent: -8, opacity: 0, duration: 1 }, 0);
     }, hero);
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    const title = titleRef.current;
+    if (!title) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 769) return;
+
+    const words = title.querySelectorAll(".hero-word");
+    gsap.fromTo(
+      words,
+      { opacity: 0, yPercent: 40, clipPath: "inset(100% 0 0 0)" },
+      {
+        opacity: 1,
+        yPercent: 0,
+        clipPath: "inset(0% 0 0 0)",
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.08,
+        delay: 0.3,
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const media = mediaRef.current;
+    if (!hero || !media) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || window.innerWidth < 769) return;
+
+    hero.addEventListener("mousemove", handleMouseMove);
+    return () => hero.removeEventListener("mousemove", handleMouseMove);
+  }, [handleMouseMove]);
 
   return (
     <section className="hero" id="top" ref={heroRef}>
@@ -98,18 +188,23 @@ export default function Hero() {
         />
       </div>
 
+      <div className="cloud-layer cloud-far" aria-hidden="true"></div>
+      <div className="cloud-layer cloud-mid" aria-hidden="true"></div>
+      <div className="cloud-layer cloud-haze" aria-hidden="true"></div>
+
       <div className="hero-overlay" aria-hidden="true"></div>
       <div className="hero-scrim" ref={scrimRef} aria-hidden="true"></div>
 
       <div className="hero-container">
         <div className="hero-content" ref={contentRef}>
           <span className="eyebrow hero-enter-up d1">Since 2017</span>
-          <h1 className="hero-title hero-enter-up d2">
-            Building better
-            <br />
-            <em>spaces</em> with
-            <br />
-            quality products
+          <h1 className="hero-title hero-enter-up d2" ref={titleRef}>
+            {heroWords.map((word, i) => (
+              <span className="hero-word" key={i}>
+                {word === "spaces" ? <em>{word}</em> : word}
+                {i < heroWords.length - 1 ? " " : ""}
+              </span>
+            ))}
           </h1>
           <p className="hero-sub hero-enter-up d3">
             Your trusted destination for electricals, hardware and building
@@ -142,10 +237,7 @@ export default function Hero() {
 
         <div className="hero-stats hero-enter-up d7" ref={statsRef}>
           {stats.map((s) => (
-            <div key={s.label} className="hero-stat">
-              <span className="hero-stat-value">{s.value}</span>
-              <span className="hero-stat-label">{s.label}</span>
-            </div>
+            <StatItem key={s.label} stat={s} />
           ))}
         </div>
       </div>

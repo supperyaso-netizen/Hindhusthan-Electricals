@@ -1,7 +1,6 @@
 import useScrollReveal from "../hooks/useScrollReveal";
 import Hero from "../components/Hero";
 import About from "../components/About";
-import StatsReel from "../components/StatsReel";
 import Brands from "../components/Brands";
 import Gallery from "../components/Gallery";
 import ShopExperience from "../components/ShopExperience";
@@ -16,7 +15,6 @@ export default function HomePage() {
     <main id="top">
       <Hero />
       <About />
-      <StatsReel />
       <Brands />
       <Gallery />
       <ShopExperience />

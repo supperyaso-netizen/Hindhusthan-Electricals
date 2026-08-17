@@ -34,8 +34,26 @@ const showCategories = [
 export default function Gallery() {
   const [active, setActive] = useState("lighting");
   const sectionRef = useRef(null);
+  const filtersRef = useRef(null);
 
   const filtered = products.filter((p) => p.category === active);
+
+  useEffect(() => {
+    const filters = filtersRef.current;
+    if (!filters) return;
+    const activeBtn = filters.querySelector(".gallery-filter.active");
+    const indicator = filters.querySelector(".filter-indicator");
+    if (!activeBtn || !indicator) return;
+
+    const rect = activeBtn.getBoundingClientRect();
+    const containerRect = filters.getBoundingClientRect();
+    gsap.to(indicator, {
+      x: rect.left - containerRect.left,
+      width: rect.width,
+      duration: 0.35,
+      ease: "power2.out",
+    });
+  }, [active]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -67,14 +85,15 @@ export default function Gallery() {
       medias.forEach((img) => {
         gsap.fromTo(
           img,
-          { scale: 1.12 },
+          { scale: 1 },
           {
-            scale: 1,
-            duration: 1.4,
-            ease: "power3.out",
+            scale: 1.08,
+            ease: "none",
             scrollTrigger: {
               trigger: img,
-              start: "top 82%",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.6,
             },
           }
         );
@@ -176,7 +195,8 @@ export default function Gallery() {
           </div>
         </div>
 
-        <div className="gallery-filters reveal reveal-delay-3">
+        <div className="gallery-filters reveal reveal-delay-3" ref={filtersRef}>
+          <div className="filter-indicator" aria-hidden="true"></div>
           {categories.map((cat) => (
             <button
               key={cat}

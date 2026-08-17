@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 
 const QUERIES = [
@@ -9,10 +9,10 @@ const QUERIES = [
 ];
 
 const useMedia = (values, defaultValue) => {
-  const get = () => {
+  const get = useCallback(() => {
     if (typeof window === "undefined") return defaultValue;
     return values[QUERIES.findIndex((q) => matchMedia(q).matches)] ?? defaultValue;
-  };
+  }, [values, defaultValue]);
 
   const [value, setValue] = useState(get);
 
@@ -20,7 +20,7 @@ const useMedia = (values, defaultValue) => {
     const handler = () => setValue(get);
     QUERIES.forEach((q) => matchMedia(q).addEventListener("change", handler));
     return () => QUERIES.forEach((q) => matchMedia(q).removeEventListener("change", handler));
-  }, []);
+  }, [get]);
 
   return value;
 };
@@ -71,8 +71,9 @@ const Masonry = ({
   const [containerRef, { width }] = useMeasure();
   const [imagesReady, setImagesReady] = useState(false);
 
-  const getInitialPosition = (item) => {
-    const containerRect = containerRef.current?.getBoundingClientRect();
+  const getInitialPosition = useCallback((item) => {
+    const el = containerRef.current;
+    const containerRect = el?.getBoundingClientRect();
     if (!containerRect) return { x: item.x, y: item.y };
 
     let direction = animateFrom;
@@ -98,7 +99,8 @@ const Masonry = ({
       default:
         return { x: item.x, y: item.y + 100 };
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- containerRef is a stable ref
+  }, [animateFrom]);
 
   useEffect(() => {
     preloadImages(items.map((i) => i.img)).then(() => setImagesReady(true));
@@ -164,7 +166,7 @@ const Masonry = ({
     });
 
     hasMounted.current = true;
-  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease]);
+  }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease, getInitialPosition]);
 
   const handleMouseEnter = (id, element) => {
     if (scaleOnHover) {

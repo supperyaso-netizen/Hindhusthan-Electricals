@@ -19,16 +19,16 @@ export default function About() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         media,
-        { yPercent: -14, scale: 1.18 },
+        { yPercent: -8, scale: 1 },
         {
-          yPercent: 14,
-          scale: 1.18,
+          yPercent: 8,
+          scale: 1.08,
           ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top bottom",
             end: "bottom top",
-            scrub: true,
+            scrub: 0.6,
           },
         }
       );
